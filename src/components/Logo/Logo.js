@@ -1,8 +1,11 @@
 import React from "react";
-import log from '../ll'
+import burgerLogo from '../../assets/images/original.png';
+import classes from './Logo.module.scss';
 
-const logo = () => (
-
-)
+const logo = (props) => (
+    <div className={classes.Logo}>
+        <img src={burgerLogo} alt=""/>
+    </div>
+);
 
 export default logo;

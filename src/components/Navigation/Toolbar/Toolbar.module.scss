@@ -16,3 +16,12 @@
     height: 100%;
   }
 }
+
+.Logo {
+  height: 80%;
+}
+.DeskTopOnly {
+  @media screen and (max-width: 499px) {
+    display: none;
+  }
+}

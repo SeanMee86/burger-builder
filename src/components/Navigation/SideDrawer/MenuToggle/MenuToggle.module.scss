@@ -1,0 +1,31 @@
+.MenuContainer {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  background-color: rgba(0,0,0, 0.5);
+  border-radius: 5px;
+
+  .Hamburger {
+    height: 2px;
+    width: 80%;
+    background-color: #fff;
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '';
+      height: inherit;
+      width: 100%;
+      position: absolute;
+      top: 10px;
+      background-color: inherit;
+    }
+
+    &:after {
+      top: -10px;
+    }
+  }
+}
