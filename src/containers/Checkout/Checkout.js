@@ -1,28 +1,29 @@
 import React, {Component} from "react";
 import {Route} from 'react-router-dom';
+import { connect } from 'react-redux';
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from "./ContactData/ContactData";
 
 class Checkout extends Component {
-    state = {
-        ingredients: null,
-        price: 0
-    };
+    // state = {
+    //     ingredients: null,
+    //     price: 0
+    // };
 
     componentWillMount() {
         // const ingredients = new URLSearchParams(this.props.location.search);
-        const query = new URLSearchParams(this.props.location.search);
-        let price;
-
-        const ingredients = {};
-        for (let param of query.entries()){
-            if(param[0] === 'price'){
-                price = param[1];
-            }else {
-                ingredients[param[0]] = +param[1]
-            }
-        }
-        this.setState({ingredients, price})
+        // const query = new URLSearchParams(this.props.location.search);
+        // let price;
+        //
+        // const ingredients = {};
+        // for (let param of query.entries()){
+        //     if(param[0] === 'price'){
+        //         price = param[1];
+        //     }else {
+        //         ingredients[param[0]] = +param[1]
+        //     }
+        // }
+        // this.setState({ingredients, price})
         // this.setState({
         //     ingredients: {
         //         salad: +ingredients.get('salad'),
@@ -57,4 +58,9 @@ class Checkout extends Component {
     }
 }
 
-export default Checkout;
+const mapStateToProps = state => ({
+    ingredients: state.ingredients,
+    totalPrice: state.totalPrice
+});
+
+export default connect(mapStateToProps)(Checkout);
