@@ -3,7 +3,6 @@ import {Route} from 'react-router-dom';
 import {connect} from "react-redux";
 import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSummary';
 import ContactData from "./ContactData/ContactData";
-import mapStateToProps from "react-redux/lib/connect/mapStateToProps";
 
 class Checkout extends Component {
     state = {
@@ -59,9 +58,9 @@ class Checkout extends Component {
     }
 }
 
-const mapStateToPropsCheckout = state => ({
+const mapStateToProps = state => ({
     ingredients: state.ingredients.ingredients,
     price: state.price.price
 });
 
-export default connect(mapStateToPropsCheckout)(Checkout);
+export default connect(mapStateToProps)(Checkout);
