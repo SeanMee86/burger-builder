@@ -43,24 +43,22 @@ class Checkout extends Component {
     };
 
     render(){
-
         return(
             <div>
                 <CheckoutSummary
                     checkoutCancelled={this.checkoutCancelledHandler}
                     checkoutContinued={this.checkoutContinuedHandler}
-                    ingredients={this.state.ingredients}/>
+                    ingredients={this.props.ingredients}/>
                     <Route
                         path={this.props.match.url + '/contact-data'}
-                        render={(props) => <ContactData price={this.state.price} ingredients={this.state.ingredients} {...props}/>}/>
+                        component={ContactData}/>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice
+    ingredients: state.ingredients
 });
 
 export default connect(mapStateToProps)(Checkout);
