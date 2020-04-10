@@ -7,6 +7,7 @@ import axios from "../../../axios-orders";
 import Input from '../../../components/UI/Input/Input';
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import {purchaseBurger} from "../../../store/actions";
+import {updateObject, checkValidity} from "../../../shared/util";
 
 class ContactData extends Component{
     state = {
@@ -14,13 +15,12 @@ class ContactData extends Component{
             name: {
                 elementType: 'input',
                 elementConfig: {
-                    // name: 'name',
                     type: 'text',
                     placeholder: 'Your Name'
                 },
                 value: '',
                 validation: {
-                    required: true,
+                    required: true
                 },
                 valid: false,
                 touched: false
@@ -33,7 +33,7 @@ class ContactData extends Component{
                 },
                 value: '',
                 validation: {
-                    required: true,
+                    required: true
                 },
                 valid: false,
                 touched: false
@@ -48,7 +48,8 @@ class ContactData extends Component{
                 validation: {
                     required: true,
                     minLength: 5,
-                    maxLength: 5
+                    maxLength: 5,
+                    isNumeric: true
                 },
                 valid: false,
                 touched: false
@@ -61,7 +62,7 @@ class ContactData extends Component{
                 },
                 value: '',
                 validation: {
-                    required: true,
+                    required: true
                 },
                 valid: false,
                 touched: false
@@ -75,6 +76,7 @@ class ContactData extends Component{
                 value: '',
                 validation: {
                     required: true,
+                    isEmail: true
                 },
                 valid: false,
                 touched: false
@@ -83,72 +85,32 @@ class ContactData extends Component{
                 elementType: 'select',
                 elementConfig: {
                     options: [
-                        {
-                            value: 'fastest',
-                            displayValue: 'Fastest'
-                        },
-                        {
-                            value: 'cheapest',
-                            displayValue: 'Cheapest'
-                        }
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
                 value: 'fastest',
-                validation: {
-                    required: false
-                },
+                validation: {},
                 valid: true
             }
         },
-        loading: false,
         formIsValid: false
     };
-
-    checkValidity(value, rules) {
-        let isValid = true;
-        if (!rules) {
-            return true;
-        }
-
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid
-        }
-
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        return isValid;
-    }
 
     inputChangedHandler = (event, inputIdentifier) => {
         // const newOrderValue = {...this.state.orderForm};
         // newOrderValue[event.target.name].value = event.target.value;
         // this.setState({orderForm: newOrderValue});
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        };
-        const updatedFormElement = {
-            ...updatedOrderForm[inputIdentifier]
-        };
-        updatedFormElement.value = event.target.value;
-        updatedFormElement.valid = this.checkValidity(updatedFormElement.value, updatedFormElement.validation);
-        updatedFormElement.touched = true;
-        updatedOrderForm[inputIdentifier] = updatedFormElement;
+
+        const updatedFormElement = updateObject(this.state.orderForm[inputIdentifier], {
+            value: event.target.value,
+            valid: checkValidity(event.target.value, this.state.orderForm[inputIdentifier].validation),
+            touched: true
+        });
+
+        const updatedOrderForm = updateObject(this.state.orderForm, {
+            [inputIdentifier]: updatedFormElement
+        });
 
         let formIsValid = true;
 

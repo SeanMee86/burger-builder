@@ -7,7 +7,7 @@ import {
     PURCHASE_BURGER_SUCCESS
 } from "../actions/types";
 
-import {updateObject} from "../util";
+import {updateObject} from "../../shared/util";
 
 const initialState = {
     orders: [],

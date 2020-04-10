@@ -1,6 +1,12 @@
-import {AUTH_FAIL, AUTH_SUCCESS, AUTH_START, AUTH_LOGOUT, SET_AUTH_REDIRECT_PATH} from "../actions/types";
+import {
+    AUTH_FAIL,
+    AUTH_SUCCESS,
+    AUTH_START,
+    AUTH_LOGOUT,
+    SET_AUTH_REDIRECT_PATH
+} from "../actions/types";
 
-import {updateObject} from "../util";
+import {updateObject} from "../../shared/util";
 
 const initialState = {
     token: null,

@@ -5,7 +5,7 @@ import {
     GET_INGREDIENTS_FAILED
 } from "../actions/types";
 
-import {updateObject} from "../util";
+import {updateObject} from "../../shared/util";
 
 const initialState = {
     ingredients: null,
