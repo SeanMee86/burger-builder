@@ -9,10 +9,12 @@ import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
 import burgerBuildReducer from './store/reducers/burgerBuildReducer';
 import orderReducer from "./store/reducers/orderReducer";
+import authReducer from "./store/reducers/auth";
 
 const rootReducer = combineReducers({
     burgerBuilder: burgerBuildReducer,
-    order: orderReducer
+    order: orderReducer,
+    auth: authReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

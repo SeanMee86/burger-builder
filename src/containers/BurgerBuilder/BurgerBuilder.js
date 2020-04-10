@@ -11,9 +11,10 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import {
     addIngredient,
     getIngredients,
-    removeIngredient
+    removeIngredient,
+    purchaseInit,
+    setAuthRedirectPath
 } from "../../store/actions/";
-import {purchaseInit} from "../../store/actions/";
 
 class BurgerBuilder extends Component {
 
@@ -66,7 +67,12 @@ class BurgerBuilder extends Component {
     };
 
     purchaseHandler () {
-        this.setState({purchasing: true});
+        if(this.props.isAuthenticated) {
+            this.setState({purchasing: true});
+        }else{
+            this.props.setAuthRedirectPath('/checkout');
+            this.props.history.push('/auth')
+        }
     };
 
     purchaseCancelHandler = () => {
@@ -110,6 +116,7 @@ class BurgerBuilder extends Component {
                         price={this.props.totalPrice}
                         purchasable={this.updatePurchaseState(this.props.ingredients)}
                         ordered={this.purchaseHandler.bind(this)}
+                        isAuth={this.props.isAuthenticated}
                     />
                 </Fragment>
             orderSummary =
@@ -136,7 +143,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => ({
     ingredients: state.burgerBuilder.ingredients,
     totalPrice: state.burgerBuilder.totalPrice,
-    error: state.order.error
+    error: state.order.error,
+    isAuthenticated: state.auth.token !==null
 });
 
 // const mapDispatchToProps = dispatch => ({
@@ -151,6 +159,7 @@ export default connect(
         addIngredient,
         removeIngredient,
         getIngredients,
-        purchaseInit
+        purchaseInit,
+        setAuthRedirectPath
     }
 )(withErrorHandler(BurgerBuilder, axios));
